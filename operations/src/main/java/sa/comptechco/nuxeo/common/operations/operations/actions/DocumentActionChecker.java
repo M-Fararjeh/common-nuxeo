@@ -32,7 +32,14 @@ public class DocumentActionChecker {
     public DocumentActionChecker(CoreSession session, DocumentModel document) {
         this.session = session;
         this.document = document;
-        this.restrictionsService = Framework.getService(CustomRestrictionsService.class);
+        // Try to get the restrictions service, but handle gracefully if not available
+        CustomRestrictionsService tempService = null;
+        try {
+            tempService = Framework.getService(CustomRestrictionsService.class);
+        } catch (Exception e) {
+            // Service not available, will default to allowing all actions
+        }
+        this.restrictionsService = tempService;
         this.userGroups = session.getPrincipal().getAllGroups();
         this.documentPath = getDocumentPath();
         this.documentType = document.getType();
