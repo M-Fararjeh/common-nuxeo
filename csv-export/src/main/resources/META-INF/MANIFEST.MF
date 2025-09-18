@@ -1,0 +1,9 @@
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Manifest-Version: 1.0
+Bundle-Vendor: sa.comptechco.nuxeo
+Bundle-Version: 1.0.0
+Bundle-Name: csv-export
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: sa.comptechco.nuxeo-csv-core;singleton=true
+Nuxeo-Component: OSGI-INF/csvmarshallers-contrib.xml

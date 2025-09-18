@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<component name="sa.comptechco.nuxeo.common.services.api.CustomRestrictionsService">
+
+    <documentation>
+
+    </documentation>
+    <implementation class="sa.comptechco.nuxeo.common.services.CustomRestrictionsComponent" />
+    <service>
+        <provide interface="sa.comptechco.nuxeo.common.services.api.CustomRestrictionsService" />
+    </service>
+
+    <extension target="org.nuxeo.runtime.ConfigurationService" point="configuration">
+        <documentation>
+
+        </documentation>
+        <property name="sa.comptechco.nuxeo.common.services.restrictions.settings.file">comptechco-custom-restrictions-settings.json</property>
+    </extension>
+</component>

@@ -1,0 +1,5 @@
+<component name="org.nuxeo.vocabularies.l10n.directory">
+    <extension point="directories" target="org.nuxeo.directory.mongodb.MongoDBDirectoryFactory">
+        
+    </extension>
+</component>

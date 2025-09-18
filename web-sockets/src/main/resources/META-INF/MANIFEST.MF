@@ -1,0 +1,11 @@
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Manifest-Version: 1.0
+Bundle-Vendor: web.sockets
+Bundle-Version: 1.0.0
+Bundle-Name: web-sockets
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: web.sockets.web-sockets;singleton=true
+Nuxeo-Component: OSGI-INF/notification-creation-listener.xml,
+ OSGI-INF/push-message-operation-contribution.xml,
+ OSGI-INF/websocket-service-contrib.xml

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<component name="sa.comptechco.nuxeo.common.operations.services.ctsscheduler">
+    <require>org.nuxeo.ecm.core.scheduler.SchedulerService</require>
+    <require>org.nuxeo.ecm.core.automation.coreContrib</require>
+
+    <documentation>
+        Service that re-register cts schedulers.
+
+        @version 1.0
+    </documentation>
+
+    <implementation class="sa.comptechco.nuxeo.common.operations.service.CtsSchedulerServiceImpl"/>
+
+    <service>
+        <provide interface="sa.comptechco.nuxeo.common.operations.service.CtsSchedulerService" />
+    </service>
+
+</component>

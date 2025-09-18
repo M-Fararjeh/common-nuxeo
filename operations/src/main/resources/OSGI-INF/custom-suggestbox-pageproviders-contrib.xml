@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.suggestbox.core.pageproviders.custom">
+
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService"
+    point="providers">
+
+      <coreQueryPageProvider name="CUSTOM_DOCUMENT_SUGGESTION">
+        <property name="maxResults">PAGE_SIZE</property>
+        <pattern quoteParameters="false" escapeParameters="true">
+          SELECT * FROM Document  WHERE (((ecm:mixinType ='GeneralDocumentFacet' OR ecm:mixinType = 'KonfuzioFacet')
+           AND ecm:mixinType !=
+          'HiddenInNavigation' AND ecm:isVersion = 0 AND
+          ecm:isTrashed = 0 AND ecm:parentId IS NOT NULL AND ecm:path STARTSWITH '/default-domain/workspaces/DMS/') OR  (ecm:mixinType !=
+          'HiddenInNavigation' AND ecm:isVersion = 0 AND
+          ecm:isTrashed = 0 AND ecm:primaryType NOT IN ('Domain', 'SectionRoot', 'TemplateRoot', 'WorkspaceRoot', 'Favorites') AND ecm:mixinType NOT IN ('HiddenInNavigation','Collection','Folderish' ) AND (ecm:path STARTSWITH '/default-domain/UserWorkspaces/' OR ecm:path STARTSWITH '/default-domain/workspaces/DMSWorkspaces/') )) AND /*+ES: index(all_field) operator(match)*/ ecm:fulltext LIKE '?'
+        </pattern>
+        <pageSize>25</pageSize>
+      </coreQueryPageProvider>
+
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService" point="replacers">
+    <replacer withClass="org.nuxeo.elasticsearch.provider.ElasticSearchNxqlPageProvider">
+      <provider>CUSTOM_DOCUMENT_SUGGESTION</provider>
+    </replacer>
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService" point="replacers">
+    <replacer withClass="sa.comptechco.nuxeo.common.operations.provider.SortableElasticSearchNxqlPageProvider">
+      <provider>PP_WF_Task_Review_GetTasks</provider>
+    </replacer>
+  </extension>
+
+
+
+
+
+
+
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService"
+             point="providers">
+
+    <coreQueryPageProvider name="CUSTOM_CORRESPONDENCE_SUGGESTION">
+      <property name="maxResults">PAGE_SIZE</property>
+      <pattern quoteParameters="false" escapeParameters="true">
+        SELECT * FROM Document  WHERE ecm:primaryType IN ('IncomingCorrespondence','InternalCorrespondence','OutgoingCorrespondence')
+        AND /*+ES: index(all_field) operator(match)*/ ecm:fulltext LIKE '?' AND comp:companyCode = '?' AND ecm:mixinType !=
+        'HiddenInNavigation' AND ecm:isVersion = 0 AND
+        ecm:isTrashed = 0 AND ecm:parentId IS NOT NULL
+      </pattern>
+      <pageSize>25</pageSize>
+    </coreQueryPageProvider>
+
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService" point="replacers">
+    <replacer withClass="org.nuxeo.elasticsearch.provider.ElasticSearchNxqlPageProvider">
+      <provider>CUSTOM_CORRESPONDENCE_SUGGESTION</provider>
+    </replacer>
+  </extension>
+
+
+
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService"
+             point="providers">
+
+    <coreQueryPageProvider name="VIP_CORRESPONDENCE_SUGGESTION">
+      <property name="maxResults">PAGE_SIZE</property>
+      <pattern quoteParameters="false" escapeParameters="true">
+        SELECT * FROM Document  WHERE ecm:mixinType != 'HiddenInNavigation'
+        AND ecm:isVersion = 0 AND ecm:isTrashed = 0
+        AND ecm:fulltext LIKE '?'
+        AND (correspondence-sign:sign/signee = :signUser OR correspondence-redirect:assignment/user = :redirectUser)
+      </pattern>
+      <pageSize>25</pageSize>
+    </coreQueryPageProvider>
+
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService" point="replacers">
+    <replacer withClass="org.nuxeo.elasticsearch.provider.ElasticSearchNxqlPageProvider">
+      <provider>VIP_CORRESPONDENCE_SUGGESTION</provider>
+    </replacer>
+  </extension>
+
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService"
+             point="providers">
+
+    <coreQueryPageProvider name="VIP_ASSIGNMENT_SUGGESTION">
+      <property name="maxResults">PAGE_SIZE</property>
+      <pattern quoteParameters="false" escapeParameters="true">
+        SELECT * FROM Assignment  WHERE ecm:mixinType != 'HiddenInNavigation'
+        AND ecm:isVersion = 0 AND ecm:isTrashed = 0
+        AND assign:assignee= :assignee AND ecm:fulltext LIKE '?' AND comp:companyCode = '?'
+        AND (assign:typee IN ('redirection','signature'))
+      </pattern>
+      <pageSize>25</pageSize>
+    </coreQueryPageProvider>
+
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService" point="replacers">
+    <replacer withClass="org.nuxeo.elasticsearch.provider.ElasticSearchNxqlPageProvider">
+      <provider>VIP_ASSIGNMENT_SUGGESTION</provider>
+    </replacer>
+  </extension>
+
+</component>

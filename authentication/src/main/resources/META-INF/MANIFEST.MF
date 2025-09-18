@@ -1,0 +1,10 @@
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Manifest-Version: 1.0
+Bundle-Vendor: authentication
+Bundle-Version: 1.0.0
+Bundle-Name: comptechco.nuxeo.authentication
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: comptechco.nuxeo.authentication;singleton=true
+Nuxeo-WebModule: org.nuxeo.ecm.webengine.app.WebEngineModule;name=PublicCall;package=sa/comptechco/nuxeo/common/auth/endpoints
+Nuxeo-Component: OSGI-INF/unrestricted-endpoint-contrib.xml

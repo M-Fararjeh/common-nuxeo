@@ -1,0 +1,153 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>sa.comptechco.nuxeo.common</groupId>
+		<artifactId>common-nuxeo</artifactId>
+		<version>1.0</version>
+	</parent>
+	<artifactId>rest-api</artifactId>
+	<name>Meeting Rest API</name>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>5.2</version>
+	<!--		<scope>compile</scope>-->
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.common</groupId>
+			<artifactId>nuxeo-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.ecm.webengine</groupId>
+			<artifactId>nuxeo-webengine-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.runtime</groupId>
+			<artifactId>nuxeo-runtime-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.ecm.routing</groupId>
+			<artifactId>nuxeo-routing-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.ecm.routing</groupId>
+			<artifactId>nuxeo-routing-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.ecm.platform</groupId>
+			<artifactId>nuxeo-platform-task-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.ecm.platform</groupId>
+			<artifactId>nuxeo-platform-collections-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.ecm.platform</groupId>
+			<artifactId>nuxeo-platform-task-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.ecm.platform</groupId>
+			<artifactId>nuxeo-platform-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.ecm.automation</groupId>
+			<artifactId>nuxeo-automation-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.ecm.platform</groupId>
+			<artifactId>nuxeo-rest-api-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.ecm.platform</groupId>
+			<artifactId>nuxeo-rest-api-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.ecm.platform</groupId>
+			<artifactId>nuxeo-search-rest-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+		</dependency>
+
+
+				<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-core</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.ws.rs/jsr311-api -->
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>jsr311-api</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-core</artifactId>
+    	</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-server</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet.jaxb2.maven2</groupId>
+			<artifactId>maven-jaxb2-plugin</artifactId>
+			<version>0.14.0</version>
+		</dependency>
+
+		<!-- Nuxeo -->
+		<dependency>
+			<groupId>org.nuxeo.ecm.core</groupId>
+			<artifactId>nuxeo-core-persistence</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.nuxeo.ecm.platform</groupId>
+			<artifactId>nuxeo-user-profile</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.keycloak</groupId>
+			<artifactId>keycloak-core</artifactId>
+			<version>19.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.multi.tenant</groupId>
+			<artifactId>nuxeo-multi-tenant-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.nuxeo.multi.tenant</groupId>
+			<artifactId>nuxeo-multi-tenant-core</artifactId>
+		</dependency>
+		<dependency>
+		<groupId>org.nuxeo.ecm.platform</groupId>
+		<artifactId>nuxeo-platform-login-keycloak</artifactId>
+		</dependency>
+<!--		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>jsr311-api</artifactId>
+		</dependency>-->
+	</dependencies>
+</project>

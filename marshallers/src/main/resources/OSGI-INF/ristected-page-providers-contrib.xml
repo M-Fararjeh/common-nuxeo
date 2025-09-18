@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="sa.comptechco.nuxeo.bms.ui.pageprovider">
+
+    <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService"
+               point="providers">
+        <coreQueryPageProvider name="tdf_nuxeo_ui_content_collection">
+            <pattern>
+                SELECT * FROM Document where ecm:mixinType != 'HiddenInNavigation' AND
+                ecm:isTrashed = 0
+                AND NOT ecm:path STARTSWITH '/default-domain/Departments Hierarchy'
+                AND NOT ecm:path STARTSWITH '/default-domain/workspaces/CTS'
+                AND NOT ecm:path STARTSWITH '/default-domain/workspaces/Meeting management'
+                AND NOT (ecm:path STARTSWITH '/default-domain' AND ecm:name = 'Departments Hierarchy')
+                AND NOT (ecm:path STARTSWITH '/default-domain/workspaces' AND ecm:name = 'CTS')
+                AND NOT (ecm:path STARTSWITH '/default-domain/workspaces' AND ecm:name = 'Meeting management')
+                AND collectionMember:collectionIds/* = ?
+            </pattern>
+            <sort column="dc:title" ascending="true" />
+            <pageSize>50</pageSize>
+        </coreQueryPageProvider>
+
+        <coreQueryPageProvider name="tdf_nuxeo_ui_domain_documents">
+            <property name="maxResults">DEFAULT_NAVIGATION_RESULTS</property>
+            <pattern>
+                SELECT * FROM Document WHERE ecm:path STARTSWITH ?
+                AND ecm:mixinType != 'Folderish' AND ecm:mixinType !=
+                'SystemDocument' AND ecm:mixinType !=
+                'HiddenInNavigation' AND ecm:isVersion = 0 AND ecm:isProxy = 0
+                AND ecm:isTrashed = 0
+                AND NOT ecm:path STARTSWITH '/default-domain/Departments Hierarchy'
+                AND NOT ecm:path STARTSWITH '/default-domain/workspaces/CTS'
+                AND NOT ecm:path STARTSWITH '/default-domain/workspaces/Meeting management'
+                AND NOT (ecm:path STARTSWITH '/default-domain' AND ecm:name = 'Departments Hierarchy')
+                AND NOT (ecm:path STARTSWITH '/default-domain/workspaces' AND ecm:name = 'CTS')
+                AND NOT (ecm:path STARTSWITH '/default-domain/workspaces' AND ecm:name = 'Meeting management')
+            </pattern>
+            <sort column="dc:modified" ascending="false" />
+            <pageSize>5</pageSize>
+        </coreQueryPageProvider>
+        <coreQueryPageProvider name="tdf_nuxeo_ui_tree_children">
+            <property name="maxResults">PAGE_SIZE</property>
+            <pattern>
+                SELECT * FROM Document WHERE ecm:parentId = ? AND ecm:isProxy = 0 AND
+                ecm:mixinType = 'Folderish' AND ecm:mixinType != 'HiddenInNavigation'
+                AND ecm:isVersion = 0 AND ecm:isTrashed = 0
+                AND NOT ecm:path STARTSWITH '/default-domain/Departments Hierarchy'
+                AND NOT ecm:path STARTSWITH '/default-domain/workspaces/CTS'
+                AND NOT ecm:path STARTSWITH '/default-domain/workspaces/Meeting management'
+                AND NOT (ecm:path STARTSWITH '/default-domain' AND ecm:name = 'Departments Hierarchy')
+                AND NOT (ecm:path STARTSWITH '/default-domain/workspaces' AND ecm:name = 'CTS')
+                AND NOT (ecm:path STARTSWITH '/default-domain/workspaces' AND ecm:name = 'Meeting management')
+            </pattern>
+            <sort column="ecm:pos" ascending="true" />
+            <sort column="dc:title" ascending="true" />
+            <pageSize>50</pageSize>
+        </coreQueryPageProvider>
+
+
+        <coreQueryPageProvider name="tdf_nuxeo_ui_advanced_document_content">
+            <trackUsage>true</trackUsage>
+            <property name="maxResults">DEFAULT_NAVIGATION_RESULTS</property>
+            <whereClause docType="AdvancedContent">
+                <fixedPart>
+                    ecm:isVersion = 0 AND
+                    ecm:mixinType !=
+                    'HiddenInNavigation'
+                    AND NOT ecm:path STARTSWITH '/default-domain/Departments Hierarchy'
+                    AND NOT ecm:path STARTSWITH '/default-domain/workspaces/CTS'
+                    AND NOT ecm:path STARTSWITH '/default-domain/workspaces/Meeting management'
+                    AND NOT (ecm:path STARTSWITH '/default-domain' AND ecm:name = 'Departments Hierarchy')
+                    AND NOT (ecm:path STARTSWITH '/default-domain/workspaces' AND ecm:name = 'CTS')
+                    AND NOT (ecm:path STARTSWITH '/default-domain/workspaces' AND ecm:name = 'Meeting management')
+                </fixedPart>
+                <predicate parameter="dc:title" operator="FULLTEXT">
+                    <field schema="advanced_content" name="title" />
+                </predicate>
+                <predicate parameter="ecm:parentId" operator="=">
+                    <field schema="advanced_content" name="ecm_parentId" />
+                </predicate>
+                <predicate parameter="ecm:isTrashed" operator="=">
+                    <field schema="advanced_content" name="ecm_trashed" />
+                </predicate>
+            </whereClause>
+            <aggregates>
+                <aggregate id="dc_last_contributor_agg" type="terms" parameter="dc:lastContributor">
+                    <field schema="advanced_content" name="dc_last_contributor_agg" />
+                    <properties>
+                        <property name="size">10</property>
+                    </properties>
+                </aggregate>
+                <aggregate id="dc_modified_agg" type="date_range" parameter="dc:modified">
+                    <field schema="advanced_content" name="dc_modified_agg" />
+                    <properties>
+                        <property name="format">"dd-MM-yyyy"</property>
+                    </properties>
+                    <dateRanges>
+                        <dateRange key="last24h" fromDate="now-24H" toDate="now"/>
+                        <dateRange key="lastWeek" fromDate="now-7d" toDate="now-24H"/>
+                        <dateRange key="lastMonth" fromDate="now-1M" toDate="now-7d"/>
+                        <dateRange key="lastYear" fromDate="now-1y" toDate="now-1M"/>
+                        <dateRange key="priorToLastYear" toDate="now-1y"/>
+                    </dateRanges>
+                </aggregate>
+            </aggregates>
+            <sort column="dc:modified" ascending="false" />
+            <pageSize>20</pageSize>
+        </coreQueryPageProvider>
+
+
+        <coreQueryPageProvider name="tdf_nuxeo_ui_default_search">
+            <trackUsage>true</trackUsage>
+            <whereClause docType="DefaultSearch">
+                <fixedPart>
+                    ecm:primaryType NOT IN ('Domain', 'SectionRoot', 'TemplateRoot', 'WorkspaceRoot', 'Favorites')
+                    AND ecm:mixinType != 'HiddenInNavigation'
+                    AND NOT (ecm:mixinType = 'Collection' AND ecm:name = 'Locally Edited')
+                    AND ecm:isVersion = 0
+                    AND ecm:isTrashed = 0
+                    AND ecm:parentId IS NOT NULL
+                    AND SORTED_COLUMN IS NOT NULL
+                    AND NOT ecm:path STARTSWITH '/default-domain/Departments Hierarchy'
+                    AND NOT ecm:path STARTSWITH '/default-domain/workspaces/CTS'
+                    AND NOT ecm:path STARTSWITH '/default-domain/workspaces/Meeting management'
+                    AND NOT (ecm:path STARTSWITH '/default-domain' AND ecm:name = 'Departments Hierarchy')
+                    AND NOT (ecm:path STARTSWITH '/default-domain/workspaces' AND ecm:name = 'CTS')
+                    AND NOT (ecm:path STARTSWITH '/default-domain/workspaces' AND ecm:name = 'Meeting management')
+                </fixedPart>
+                <predicate parameter="ecm:fulltext" operator="FULLTEXT">
+                    <field schema="default_search" name="ecm_fulltext" />
+                </predicate>
+                <predicate parameter="dc:creator" operator="IN">
+                    <field schema="default_search" name="dc_creator" />
+                </predicate>
+                <predicate parameter="dc:created" operator="BETWEEN">
+                    <field schema="default_search" name="dc_created_min" />
+                    <field schema="default_search" name="dc_created_max" />
+                </predicate>
+                <predicate parameter="dc:modified" operator="BETWEEN">
+                    <field schema="default_search" name="dc_modified_min" />
+                    <field schema="default_search" name="dc_modified_max" />
+                </predicate>
+                <predicate parameter="dc:nature" operator="IN">
+                    <field schema="default_search" name="dc_nature" />
+                </predicate>
+                <predicate parameter="dc:subjects" operator="STARTSWITH">
+                    <field schema="default_search" name="dc_subjects" />
+                </predicate>
+                <predicate parameter="dc:coverage" operator="STARTSWITH">
+                    <field schema="default_search" name="dc_coverage" />
+                </predicate>
+                <predicate parameter="ecm:path" operator="STARTSWITH">
+                    <field schema="default_search" name="ecm_path" />
+                </predicate>
+                <predicate parameter="ecm:tag" operator="IN">
+                    <field schema="default_search" name="ecm_tags" />
+                </predicate>
+                <predicate parameter="collectionMember:collectionIds"
+                           operator="IN">
+                    <field schema="default_search" name="ecm_collections" />
+                </predicate>
+            </whereClause>
+            <aggregates>
+                <aggregate id="dc_nature_agg" type="terms" parameter="dc:nature">
+                    <field schema="default_search" name="dc_nature_agg" />
+                    <properties>
+                        <property name="size">10</property>
+                    </properties>
+                </aggregate>
+                <aggregate id="dc_subjects_agg" type="terms" parameter="dc:subjects">
+                    <field schema="default_search" name="dc_subjects_agg" />
+                    <properties>
+                        <property name="size">10</property>
+                    </properties>
+                </aggregate>
+                <aggregate id="dc_coverage_agg" type="terms" parameter="dc:coverage">
+                    <field schema="default_search" name="dc_coverage_agg" />
+                    <properties>
+                        <property name="size">10</property>
+                    </properties>
+                </aggregate>
+                <aggregate id="dc_creator_agg" type="terms" parameter="dc:creator">
+                    <field schema="default_search" name="dc_creator_agg" />
+                    <properties>
+                        <property name="size">10</property>
+                    </properties>
+                </aggregate>
+                <aggregate id="common_size_agg" type="range" parameter="file:content.length">
+                    <field schema="default_search" name="common_size_agg" />
+                    <ranges>
+                        <range key="tiny" to="102400"/>
+                        <range key="small" from="102401" to="1048576"/>
+                        <range key="medium" from="1048577" to="10485760"/>
+                        <range key="big" from="10485761" to="104857600" />
+                        <range key="huge" from="104857601" />
+                    </ranges>
+                </aggregate>
+                <aggregate id="dc_modified_agg" type="date_range" parameter="dc:modified">
+                    <field schema="default_search" name="dc_modified_agg" />
+                    <properties>
+                        <property name="format">"dd-MM-yyyy"</property>
+                    </properties>
+                    <dateRanges>
+                        <dateRange key="last24h" fromDate="now-24H" toDate="now"/>
+                        <dateRange key="lastWeek" fromDate="now-7d" toDate="now-24H"/>
+                        <dateRange key="lastMonth" fromDate="now-1M" toDate="now-7d"/>
+                        <dateRange key="lastYear" fromDate="now-1y" toDate="now-1M"/>
+                        <dateRange key="priorToLastYear" toDate="now-1y"/>
+                    </dateRanges>
+                </aggregate>
+            </aggregates>
+            <quickFilters>
+                <quickFilter name="noFolder">
+                    <clause>ecm:mixinType != 'Folderish'</clause>
+                </quickFilter>
+                <quickFilter name="mostRecent">
+                    <sort column="dc:modified" ascending="false" />
+                </quickFilter>
+                <quickFilter name="onlyValidated">
+                    <clause>ecm:currentLifeCycleState = 'approved'</clause>
+                    <sort column="dc:modified" ascending="false" />
+                </quickFilter>
+            </quickFilters>
+            <pageSize>20</pageSize>
+        </coreQueryPageProvider>
+
+        <genericPageProvider name="tdf_nuxeo_ui_assets_search" class="org.nuxeo.elasticsearch.provider.ElasticSearchNxqlPageProvider">
+            <whereClause docType="AssetsSearch">
+                <predicate parameter="ecm:fulltext" operator="FULLTEXT ALL">
+                    <field schema="assets_search" name="ecm_fulltext"/>
+                </predicate>
+                <fixedPart>ecm:mixinType IN ('Picture', 'Audio', 'Video') AND ecm:isVersion = 0 AND
+                    ecm:isTrashed = 0 AND ecm:isProxy=0
+                    AND NOT ecm:path STARTSWITH '/default-domain/Departments Hierarchy'
+                    AND NOT ecm:path STARTSWITH '/default-domain/workspaces/CTS'
+                    AND NOT ecm:path STARTSWITH '/default-domain/workspaces/Meeting management'
+                    AND NOT (ecm:path STARTSWITH '/default-domain' AND ecm:name = 'Departments Hierarchy')
+                    AND NOT (ecm:path STARTSWITH '/default-domain/workspaces' AND ecm:name = 'CTS')
+                    AND NOT (ecm:path STARTSWITH '/default-domain/workspaces' AND ecm:name = 'Meeting management')
+                </fixedPart>
+            </whereClause>
+            <aggregates>
+                <aggregate id="system_primaryType_agg" type="terms" parameter="ecm:primaryType">
+                    <field schema="assets_search" name="system_primaryType_agg"/>
+                </aggregate>
+                <aggregate id="system_mimetype_agg" type="terms" parameter="file:content/mime-type">
+                    <field schema="assets_search" name="system_mimetype_agg"/>
+                </aggregate>
+                <aggregate id="asset_width_agg" type="range" parameter="picture:info/width">
+                    <field schema="assets_search" name="asset_width_agg"/>
+                    <ranges>
+                        <range key="to_500_px" to="500.0"/>
+                        <range key="from_500_to_1500_px" from="500.0" to="1500.0"/>
+                        <range key="from_1500_to_2000_px" from="1500.0" to="2000.0"/>
+                        <range key="from_2000_px" from="2000.0"/>
+                    </ranges>
+                </aggregate>
+                <aggregate id="asset_height_agg" type="range" parameter="picture:info/height">
+                    <field schema="assets_search" name="asset_height_agg"/>
+                    <ranges>
+                        <range key="to_500_px" to="500.0"/>
+                        <range key="from_500_to_1500_px" from="500.0" to="1500.0"/>
+                        <range key="from_1500_to_2000_px" from="1500.0" to="2000.0"/>
+                        <range key="from_2000_px" from="2000.0"/>
+                    </ranges>
+                </aggregate>
+                <aggregate id="color_profile_agg" type="terms" parameter="picture:info/colorSpace">
+                    <field schema="assets_search" name="color_profile_agg"/>
+                </aggregate>
+                <aggregate id="color_depth_agg" type="terms" parameter="picture:info/depth">
+                    <field schema="assets_search" name="color_depth_agg"/>
+                </aggregate>
+                <aggregate id="video_duration_agg" type="range" parameter="vid:info/duration">
+                    <field schema="assets_search" name="video_duration_agg"/>
+                    <ranges>
+                        <range key="to_30_s" to="30.0"/>
+                        <range key="from_30_to_180_s" from="30.0" to="180.0"/>
+                        <range key="from_180_to_600_s" from="180.0" to="600.0"/>
+                        <range key="from_600_to_1800_s" from="600.0" to="1800.0"/>
+                        <range key="from_1800_s" from="1800.0"/>
+                    </ranges>
+                </aggregate>
+            </aggregates>
+            <pageSize>20</pageSize>
+        </genericPageProvider>
+
+    </extension>
+
+
+
+</component>

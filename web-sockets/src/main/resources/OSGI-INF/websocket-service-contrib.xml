@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<component name="web.sockets.services.nuxeo.WebSocketService">
+    <documentation>
+        Service that deals with WebSocket service.
+
+        @version 1.0
+    </documentation>
+    <implementation class="web.sockets.services.nuxeo.WebSocketServiceImpl" />
+    <service>
+        <provide interface="web.sockets.services.nuxeo.WebSocketService" />
+    </service>
+</component>

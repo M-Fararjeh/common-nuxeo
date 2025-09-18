@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 1
+Bundle-Name: rest-api
+Bundle-SymbolicName: org.nuxeo.ecm.platform.restapi.server.redrouting;singleton:=true
+Fragment-Host: org.nuxeo.ecm.platform.restapi.server
+Bundle-Vendor: Nuxeo
+Bundle-Version: 1.0.0
+Import-Package: org.nuxeo.ecm.webengine,
+ org.apache.commons.logging,
+ javax.ws.rs,
+ org.nuxeo.ecm.core,
+ org.apache.commons.lang3,
+ org.nuxeo.ecm.automation,
+ org.nuxeo.runtime,
+ com.fasterxml.jackson.databind,
+ org.apache.commons.collections,
+ org.keycloak,
+ com.fasterxml.jackson.core,
+ org.nuxeo.ecm.directory,
+ org.nuxeo.ecm.platform.usermanager,
+ javax.servlet
+

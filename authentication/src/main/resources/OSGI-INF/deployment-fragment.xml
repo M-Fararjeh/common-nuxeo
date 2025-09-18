@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<fragment version="1">
+
+
+    <extension target="web#SERVLET">
+        <servlet>
+            <servlet-name>AuthLoginServlet</servlet-name>
+            <servlet-class>sa.comptechco.nuxeo.common.auth.servlets.AuthLoginServlet</servlet-class>
+        </servlet>
+    </extension>
+
+    <extension target="web#SERVLET-MAPPING">
+        <servlet-mapping>
+            <servlet-name>AuthLoginServlet</servlet-name>
+            <url-pattern>/app/login</url-pattern>
+        </servlet-mapping>
+    </extension>
+
+    <extension target="web#STD-AUTH-FILTER">
+        <filter-mapping>
+            <filter-name>NuxeoAuthenticationFilter</filter-name>
+            <url-pattern>/app/login</url-pattern>
+            <dispatcher>REQUEST</dispatcher>
+            <dispatcher>FORWARD</dispatcher>
+        </filter-mapping>
+    </extension>
+
+</fragment>

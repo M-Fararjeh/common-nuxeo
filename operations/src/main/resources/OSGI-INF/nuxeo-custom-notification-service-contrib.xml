@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<component name="sa.comptechco.nuxeo.common.operations.services.custom.notification">
+
+    <documentation>
+        Service that deals with custom nuxeo notification service.
+
+        @version 1.0
+    </documentation>
+
+    <implementation class="sa.comptechco.nuxeo.common.operations.service.NuxeoCustomNotificationServiceImpl"/>
+    <service>
+        <provide interface="sa.comptechco.nuxeo.common.operations.service.NuxeoCustomNotificationService" />
+    </service>
+
+</component>

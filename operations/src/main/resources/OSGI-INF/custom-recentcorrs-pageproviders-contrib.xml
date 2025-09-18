@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.suggestbox.core.pageproviders.cts_recent_corrs">
+
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService"
+    point="providers">
+
+      <coreQueryPageProvider name="CUSTOM_RECENT_CORRESPONDENCES">
+        <property name="maxResults">PAGE_SIZE</property>
+        <pattern quoteParameters="false" escapeParameters="true">
+          SELECT * FROM Document
+        </pattern>
+        <pageSize>25</pageSize>
+        <sort ascending="false" column="dc:modified"/>
+      </coreQueryPageProvider>
+
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService" point="replacers">
+    <replacer withClass="sa.comptechco.nuxeo.common.operations.provider.RecentCorrespondencesPageProvider">
+      <provider>CUSTOM_RECENT_CORRESPONDENCES</provider>
+    </replacer>
+  </extension>
+</component>

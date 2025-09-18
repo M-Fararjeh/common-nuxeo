@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<component name="sa.comptechco.nuxeo.common.suggesters" version="1.0">
+    <require>org.nuxeo.ecm.platform.suggestbox.core.defaultSuggesters</require>
+    <extension
+            target="org.nuxeo.ecm.platform.suggestbox.service.SuggestionService"
+            point="suggesters">
+
+    <suggester name="customDocumentLookupByTitle"
+               class="sa.comptechco.nuxeo.common.operations.service.suggester.CustomDocumentLookupSuggester">
+        <parameters>
+            <parameter name="providerName">CUSTOM_DOCUMENT_SUGGESTION</parameter>
+            <parameter name="highlightFields">dc:title.fulltext,ecm:binarytext,dc:description.fulltext,ecm:tag,note:note.fulltext,file:content.name,ctocr:fulltext,ctocr:wordsRoots</parameter>
+        </parameters>
+    </suggester>
+    </extension>
+    <extension
+            target="org.nuxeo.ecm.platform.suggestbox.service.SuggestionService"
+            point="suggesterGroups">
+
+        <suggesterGroup name="customsearchbox">
+            <suggesters>
+                <suggesterName>customDocumentLookupByTitle</suggesterName>
+            </suggesters>
+        </suggesterGroup>
+
+    </extension>
+
+
+
+
+
+
+    <extension
+            target="org.nuxeo.ecm.platform.suggestbox.service.SuggestionService"
+            point="suggesters">
+
+        <suggester name="customCorrespondenceLookup"
+                   class="sa.comptechco.nuxeo.common.operations.service.suggester.CorrespondenceDocumentLookupSuggester">
+            <parameters>
+                <parameter name="providerName">CUSTOM_CORRESPONDENCE_SUGGESTION</parameter>
+                <parameter name="highlightFields">dc:title.fulltext,ecm:binarytext,dc:description.fulltext,ecm:tag,note:note.fulltext,file:content.name,ctocr:fulltext,ctocr:wordsRoots</parameter>
+            </parameters>
+        </suggester>
+    </extension>
+
+
+    <extension
+            target="org.nuxeo.ecm.platform.suggestbox.service.SuggestionService"
+            point="suggesters">
+
+        <suggester name="vipCorrespondenceLookup"
+                   class="sa.comptechco.nuxeo.common.operations.service.suggester.CorrespondenceDocumentLookupSuggester">
+            <parameters>
+                <parameter name="providerName">VIP_CORRESPONDENCE_SUGGESTION</parameter>
+                <parameter name="highlightFields">dc:title.fulltext,ecm:binarytext,dc:description.fulltext,ecm:tag,note:note.fulltext,file:content.name,ctocr:fulltext,ctocr:wordsRoots</parameter>
+            </parameters>
+        </suggester>
+    </extension>
+
+    <extension
+            target="org.nuxeo.ecm.platform.suggestbox.service.SuggestionService"
+            point="suggesters">
+
+        <suggester name="vipAssignmentLookup"
+                   class="sa.comptechco.nuxeo.common.operations.service.suggester.AssignmentDocumentLookupSuggester">
+            <parameters>
+                <parameter name="providerName">VIP_ASSIGNMENT_SUGGESTION</parameter>
+                <parameter name="highlightFields">dc:title.fulltext,ecm:binarytext,dc:description.fulltext,ecm:tag,note:note.fulltext,file:content.name,ctocr:fulltext,ctocr:wordsRoots</parameter>
+            </parameters>
+        </suggester>
+    </extension>
+
+    <extension
+            target="org.nuxeo.ecm.platform.suggestbox.service.SuggestionService"
+            point="suggesterGroups">
+
+        <suggesterGroup name="correspondencesearchbox">
+            <suggesters>
+                <suggesterName>customCorrespondenceLookup</suggesterName>
+            </suggesters>
+        </suggesterGroup>
+
+        <suggesterGroup name="vipcorrespondencesearchbox">
+            <suggesters>
+                <suggesterName>vipCorrespondenceLookup</suggesterName>
+            </suggesters>
+        </suggesterGroup>
+
+        <suggesterGroup name="vipassignmentsearchbox">
+            <suggesters>
+                <suggesterName>vipAssignmentLookup</suggesterName>
+            </suggesters>
+        </suggesterGroup>
+    </extension>
+
+</component>

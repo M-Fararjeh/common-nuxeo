@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="org.nuxeo.ecm.platform.comment.service.notification.custom">
+<require>org.nuxeo.ecm.platform.comment.service.notification</require>
+    <extension
+            target="sa.comptechco.nuxeo.common.operations.service.CustomNotificationService"
+            point="notificationListenerHook">
+        <hookListener name="commentNotification"
+                      class="org.nuxeo.ecm.platform.comment.listener.CommentNotificationListener" />
+    </extension>
+
+    <extension
+            target="sa.comptechco.nuxeo.common.operations.service.CustomNotificationService"
+            point="notifications">
+
+        <notification name="CommentAdded" channel="email" enabled="false" availableIn="*"
+                      subject="New comment on '${docTitle}'"
+                      autoSubscribed="false" template="commentAdded" label="notifications.name.CommentAdded">
+            <event name="commentAdded" />
+        </notification>
+
+        <notification name="CommentUpdated" channel="email" enabled="false" availableIn="*"
+                      subject="Updated comment on '${docTitle}'"
+                      autoSubscribed="false" template="commentUpdated" label="notifications.name.Modification">
+            <event name="commentUpdated" />
+        </notification>
+
+    </extension>
+
+    <extension
+            target="sa.comptechco.nuxeo.common.operations.service.CustomNotificationService"
+            point="templates">
+        <template name="baseComment" src="templates/baseComment.ftl" />
+        <template name="commentAdded" src="templates/commentAdded.ftl" />
+        <template name="commentUpdated" src="templates/commentUpdated.ftl" />
+    </extension>
+
+    <extension
+            target="sa.comptechco.nuxeo.common.operations.service.CustomNotificationService"
+            point="notificationListenerVeto">
+        <veto name="CommentNotificationVeto" class="org.nuxeo.ecm.platform.comment.notification.CommentNotificationVeto" />
+    </extension>
+
+    <notification name="easyShareDownload" channel="email"
+                  enabled="false" availableIn="Workspace" autoSubscribed="false"
+                  template="easyShareDownload" subject="EasyShare download notification"
+                  subjectTemplate="easyShareDownloadSubject">
+        <event name="easyShareDownload"/>
+    </notification>
+    <notification name="easyShareExpired" channel="email"
+                  enabled="false" availableIn="Workspace" autoSubscribed="false"
+                  template="easyShareExpired"
+                  subject="EasyShare expired notification"
+                  subjectTemplate="easyShareExpiredSubject">
+        <event name="easyShareExpired"/>
+    </notification>
+
+    <notification name="CommentPublication" channel="email" enabled="false" availableIn="Workspace"
+                  autoSubscribed="false" template="comment" subject="Comment published" label="notifications.name.CommentPublication">
+        <event name="commentPublished"/>
+    </notification>
+    <notification name="Task assigned" enabled="false" >
+        <event name="workflowTaskAssigned"/>
+    </notification>
+    <notification name="Task assigned" channel="email" enabled="false" availableIn="Workspace"
+                  autoSubscribed="false" template="workflowTaskAssigned" templateExpr="NotificationContext['taskInstance'].getVariable('taskNotificationTemplate')" subject="Task Assigned for ${docTitle}"
+                  label="label.nuxeo.notifications.appReviewStarted">
+        <event name="workflowTaskAssigned"/>
+    </notification>
+
+    <notification name="Task reassigned" channel="email" enabled="false" availableIn="Workspace"
+                  autoSubscribed="false" template="workflowTaskAssigned" templateExpr="NotificationContext['taskInstance'].getVariable('taskNotificationTemplate')" subject="Task Reassigned on ${docTitle}"
+                  label="label.nuxeo.notifications.appReviewStarted">
+        <event name="workflowTaskReassigned"/>
+    </notification>
+
+    <notification name="Task delegated" channel="email" enabled="false" availableIn="Workspace"
+                  autoSubscribed="false" template="workflowTaskDelegated"  subject="Task Delegated on ${docTitle}"
+                  label="label.nuxeo.notifications.appReviewStarted">
+        <event name="workflowTaskDelegated"/>
+    </notification>
+    <notification name="Subscriptions updated" channel="email" enabled="false" availableIn="Workspace"
+                  autoSubscribed="false" template="subscriptionsUpdated" subject="New subscription" label="label.nuxeo.notifications.subscriptions.updated">
+        <event name="subscriptionAssigned"/>
+    </notification>
+
+    <notification name="Modification" channel="email" enabled="false" availableIn="Workspace"
+                  autoSubscribed="false" template="modif" subject="${docTitle} has been modified by ${author}" label="label.nuxeo.notifications.modif">
+        <event name="documentModified"/>
+    </notification>
+
+    <notification name="Creation" channel="email" enabled="false" availableIn="Workspace"
+                  autoSubscribed="false" template="modif" subject="${docTitle} has been created by ${author}" label="label.nuxeo.notifications.create">
+        <event name="documentCreated"/>
+    </notification>
+
+    <notification name="Publication" channel="email" enabled="false" availableIn="Section" subjectTemplate="docPublishingSubject"
+                  autoSubscribed="false" template="publish" subject="Document published" label="label.nuxeo.notifications.publication">
+        <event name="documentPublicationApproved"/>
+        <event name="documentPublicationRejected"/>
+        <event name="documentPublished"/>
+    </notification>
+
+    <notification name="PublicationOnClient" channel="email" enabled="false" availableIn="Section"
+                  autoSubscribed="false" template="publish" subject="Document published" label="label.nuxeo.notifications.publication">
+        <event name="documentPublicationApproved"/>
+        <event name="documentPublished"/>
+    </notification>
+
+    <notification name="Workflow Change" channel="email" enabled="false" availableIn="Workspace"
+                  autoSubscribed="false" template="workflow" subject="Workflow event" label="label.nuxeo.notifications.workflow">
+        <event name="workflowNewProcessStarted"/>
+        <event name="workflowProcessEnded"/>
+        <event name="workflowProcessCanceled"/>
+        <event name="workflowAbandoned"/>
+        <event name="workflowTaskCompleted"/>
+        <event name="workflowTaskRejected"/>
+        <event name="workflowTaskAssigned"/>
+    </notification>
+
+    <notification name="Approbation review started" channel="false" enabled="false" availableIn="Workspace"
+                  autoSubscribed="false" template="aprobationWorkflowStarted" subject="Review started for ${docTitle}"
+                  label="label.nuxeo.notifications.appReviewStarted">
+        <event name="workflowNewProcessStarted"/>
+    </notification>
+
+    <notification name="Task assigned" channel="email" enabled="false" availableIn="Workspace"
+                  autoSubscribed="false" template="workflowTaskAssigned" subject="Task Assigned for ${docTitle}"
+                  label="label.nuxeo.notifications.taskAssigned">
+        <event name="workflowTaskAssigned"/>
+    </notification>
+
+    <notification name="Email document" channel="email" enabled="false" availableIn="all"
+                  autoSubscribed="false" template="emailDocument" subject="${mailSubject}"
+                  label="label.nuxeo.notifications.email.document">
+        <event name="emailDocumentSend"/>
+    </notification>
+
+
+    <extension target="org.nuxeo.runtime.ConfigurationService" point="configuration">
+        <property name="org.nuxeo.ecm.platform.comment.service.notification.autosubscribe">false</property>
+    </extension>
+
+</component>

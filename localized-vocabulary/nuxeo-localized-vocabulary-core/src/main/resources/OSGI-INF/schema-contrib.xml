@@ -1,0 +1,4 @@
+<component name="org.nuxeo.vocabularies.l10n.schema">
+    <extension target="org.nuxeo.ecm.core.schema.TypeService" point="schema">
+    </extension>
+</component>

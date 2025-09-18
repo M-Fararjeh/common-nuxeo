@@ -1,0 +1,10 @@
+<component name="org.nuxeo.vocabularies.l10n.ui">
+
+    <extension target="org.nuxeo.ecm.directory.ui.DirectoryUIManager" point="directories">
+       
+    </extension>
+
+    <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager" point="widgets">
+		
+    </extension>
+</component>

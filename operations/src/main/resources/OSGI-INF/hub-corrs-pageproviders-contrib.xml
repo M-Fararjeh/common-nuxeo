@@ -1,0 +1,381 @@
+<?xml version="1.0"?>
+<component name="sa.comptechco.nuxeo.common-operations.restricted-hub">
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService"
+             point="providers">
+  <genericPageProvider class="sa.comptechco.nuxeo.common.operations.provider.HubCorrespondencesPageProvider" name="PP_HubTargetResponse">
+    <trackUsage>true</trackUsage>
+    <property name="coreSession">#{documentManager}</property>
+    <whereClause>
+      <predicate parameter="targetRes:status" operator="=">
+        <field schema="PP_TargetResponse_pp" name="targetresponse_status"/>
+        <referenceConfiguration>
+          <referenceName>directoryResolver</referenceName>
+          <parameterValues>
+            <entry>
+              <string>directory</string>
+              <string>VOC_CTS_Target_Status</string>
+            </entry>
+          </parameterValues>
+        </referenceConfiguration>
+      </predicate>
+      <predicate parameter="targetRes:status" operator="IN">
+        <field schema="PP_TargetResponse_pp" name="targetresponse_status_1"/>
+        <referenceConfiguration>
+          <referenceName>directoryResolver</referenceName>
+          <parameterValues>
+            <entry>
+              <string>directory</string>
+              <string>VOC_CTS_Target_Status</string>
+            </entry>
+          </parameterValues>
+        </referenceConfiguration>
+      </predicate>
+      <predicate parameter="targetRes:tarCode" operator="=">
+        <field schema="PP_TargetResponse_pp" name="targetresponse_tarCode"/>
+      </predicate>
+      <predicate parameter="targetRes:tarCode" operator="IN">
+        <field schema="PP_TargetResponse_pp" name="targetresponse_tarCode_1"/>
+      </predicate>
+      <predicate parameter="cts_common:correspondence" operator="=">
+        <field schema="PP_TargetResponse_pp" name="CtsCommon_correspondence"/>
+        <referenceConfiguration>
+          <referenceName>documentResolver</referenceName>
+          <parameterValues>
+            <entry>
+              <string>store</string>
+              <string>id</string>
+            </entry>
+          </parameterValues>
+        </referenceConfiguration>
+      </predicate>
+      <predicate parameter="cts_common:referenceNumber" operator="=">
+        <field schema="PP_TargetResponse_pp" name="CtsCommon_referenceNumber"/>
+      </predicate>
+      <predicate parameter="comp:companyCode" operator="=">
+        <field schema="PP_TargetResponse_pp" name="Company_companyCode"/>
+      </predicate>
+      <predicate parameter="comp:companyCode" operator="IN">
+        <field schema="PP_TargetResponse_pp" name="Company_companyCode_1"/>
+      </predicate>
+      <fixedPart>ecm:mixinType != 'HiddenInNavigation' AND ecm:isTrashed = 0 and ecm:primaryType = 'TargetResponse' AND ecm:currentLifeCycleState != 'obsolete'</fixedPart>
+    </whereClause>
+    <searchDocumentType>PP_TargetResponse_pp</searchDocumentType>
+    <aggregates>
+      <aggregate id="targetresponse_status_agg" type="terms" parameter="targetRes:status">
+        <field schema="PP_TargetResponse_pp" name="targetresponse_status_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+    </aggregates>
+    <pageSize>10</pageSize>
+  </genericPageProvider>
+
+  <genericPageProvider class="sa.comptechco.nuxeo.common.operations.provider.HubCorrespondencesPageProvider" name="PP_HubCorrespondences_Search_Elastic">
+    <trackUsage>true</trackUsage>
+    <property name="coreSession">#{documentManager}</property>
+    <whereClause>
+      <predicate parameter="corr:to" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_to"/>
+      </predicate>
+      <predicate parameter="corr:subject" operator="ILIKE">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_subject"/>
+      </predicate>
+      <predicate parameter="corr:externalCorrespondenceNumber" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_externalCorrespondenceNumber"/>
+      </predicate>
+      <predicate parameter="corr:referenceNumber" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_referenceNumber"/>
+      </predicate>
+      <predicate parameter="corr:from" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_from"/>
+      </predicate>
+      <predicate parameter="dc:created" operator="BETWEEN">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="dublincore_created_min"/>
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="dublincore_created_max"/>
+      </predicate>
+      <predicate parameter="hubCorr:createdA" operator="BETWEEN">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="HubCorrespondence_createdAt_min"/>
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="HubCorrespondence_createdAt_max"/>
+      </predicate>
+      <predicate parameter="hubCorr:status" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="HubCorrespondence_status"/>
+      </predicate>
+      <predicate parameter="ecm:currentLifeCycleState" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="system_currentLifeCycleState"/>
+      </predicate>
+      <predicate parameter="corr:owner" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_owner"/>
+        <referenceConfiguration>
+          <referenceName>userManagerResolver</referenceName>
+          <parameterValues>
+            <entry>
+              <string>type</string>
+              <string>all</string>
+            </entry>
+          </parameterValues>
+        </referenceConfiguration>
+      </predicate>
+      <predicate parameter="corr:requireReply" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_requireReply"/>
+      </predicate>
+      <predicate parameter="corr:secrecyLevel" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_secrecyLevel"/>
+        <referenceConfiguration>
+          <referenceName>directoryResolver</referenceName>
+          <parameterValues>
+            <entry>
+              <string>directory</string>
+              <string>VOC_CorrespondenceSecrecyLevel</string>
+            </entry>
+          </parameterValues>
+        </referenceConfiguration>
+      </predicate>
+      <predicate parameter="ecm:fulltext" operator="FULLTEXT">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="system_fulltext"/>
+      </predicate>
+      <predicate parameter="ecm:uuid" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="system_uuid"/>
+      </predicate>
+      <predicate parameter="corr:direction" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_direction"/>
+        <referenceConfiguration>
+          <referenceName>directoryResolver</referenceName>
+          <parameterValues>
+            <entry>
+              <string>directory</string>
+              <string>VOC_CorrespondenceDirection</string>
+            </entry>
+          </parameterValues>
+        </referenceConfiguration>
+      </predicate>
+      <predicate parameter="corr_source:creationSource" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="CorrespondenceSource_creationSource"/>
+        <referenceConfiguration>
+          <referenceName>directoryResolver</referenceName>
+          <parameterValues>
+            <entry>
+              <string>directory</string>
+              <string>VOC_CorrespondenceCreationSources</string>
+            </entry>
+          </parameterValues>
+        </referenceConfiguration>
+      </predicate>
+      <predicate parameter="ecm:uuid" operator="IN">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="system_uuid_1"/>
+      </predicate>
+      <predicate parameter="ecm:currentLifeCycleState" operator="!=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="system_currentLifeCycleState_1"/>
+      </predicate>
+      <predicate parameter="ecm:currentLifeCycleState" operator="NOT IN">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="system_currentLifeCycleState_2"/>
+      </predicate>
+      <predicate parameter="ecm:currentLifeCycleState" operator="IN">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="system_currentLifeCycleState_3"/>
+      </predicate>
+      <predicate parameter="corr:toAgency" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_toAgency"/>
+      </predicate>
+      <predicate parameter="corr:fromAgency" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_fromAgency"/>
+      </predicate>
+      <predicate parameter="corr_source:creationSource" operator="!=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="CorrespondenceSource_creationSource_1"/>
+        <referenceConfiguration>
+          <referenceName>directoryResolver</referenceName>
+          <parameterValues>
+            <entry>
+              <string>directory</string>
+              <string>VOC_CorrespondenceCreationSources</string>
+            </entry>
+          </parameterValues>
+        </referenceConfiguration>
+      </predicate>
+      <predicate parameter="inc_corr:status" operator="!=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="incomingcorrespondence_status"/>
+        <referenceConfiguration>
+          <referenceName>directoryResolver</referenceName>
+          <parameterValues>
+            <entry>
+              <string>directory</string>
+              <string>VOC_IncCorrespondenceStatus</string>
+            </entry>
+          </parameterValues>
+        </referenceConfiguration>
+      </predicate>
+      <predicate parameter="corr:replied" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_replied"/>
+      </predicate>
+      <predicate parameter="collectionMember:collectionIds" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="collectionMember_collectionIds"/>
+        <referenceConfiguration>
+          <referenceName>documentResolver</referenceName>
+          <parameterValues>
+            <entry>
+              <string>store</string>
+              <string>id</string>
+            </entry>
+          </parameterValues>
+        </referenceConfiguration>
+      </predicate>
+      <predicate parameter="corr:action" operator="=">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_action"/>
+        <referenceConfiguration>
+          <referenceName>directoryResolver</referenceName>
+          <parameterValues>
+            <entry>
+              <string>directory</string>
+              <string>VOC_CorrespondenceActions</string>
+            </entry>
+          </parameterValues>
+        </referenceConfiguration>
+      </predicate>
+      <predicate parameter="corr:action" operator="ILIKE">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_action_1"/>
+        <referenceConfiguration>
+          <referenceName>directoryResolver</referenceName>
+          <parameterValues>
+            <entry>
+              <string>directory</string>
+              <string>VOC_CorrespondenceActions</string>
+            </entry>
+          </parameterValues>
+        </referenceConfiguration>
+      </predicate>
+      <fixedPart>ecm:mixinType != 'HiddenInNavigation' AND ecm:isVersion = 0 AND  ((ecm:primaryType = 'OutgoingCorrespondence' AND ecm:mixinType='HubCorrespondence' ) OR ( ecm:primaryType = 'IncomingCorrespondence' AND corr_source:creationSource='hub')) AND comp:companyCode = ?
+      </fixedPart>
+    </whereClause>
+    <searchDocumentType>PP_Correspondences_Search_Elastic_pp</searchDocumentType>
+    <aggregates>
+      <aggregate id="system_currentLifeCycleState_agg" type="terms" parameter="ecm:currentLifeCycleState">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="system_currentLifeCycleState_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+      <aggregate id="dublincore_created_agg" type="date_range" parameter="dc:created">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="dublincore_created_agg"/>
+        <properties/>
+        <dateRanges>
+          <dateRange key="from_now-7d_to_now" fromDate="now-7d" toDate="now"/>
+          <dateRange key="from_now-1M_to_now" fromDate="now-1M" toDate="now"/>
+          <dateRange key="from_now-1y_to_now" fromDate="now-1y" toDate="now"/>
+          <dateRange key="from__to_now" toDate="now"/>
+          <dateRange key="from_now-6M_to_now" fromDate="now-6M" toDate="now"/>
+        </dateRanges>
+      </aggregate>
+      <aggregate id="Correspondence_class_agg" type="terms" parameter="corr:class">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_class_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+      <aggregate id="Correspondence_category_agg" type="terms" parameter="corr:category">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_category_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+      <aggregate id="Correspondence_classification_agg" type="terms" parameter="corr:classification">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_classification_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+      <aggregate id="Correspondence_direction_agg" type="terms" parameter="corr:direction">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_direction_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+      <aggregate id="Correspondence_from_agg" type="terms" parameter="corr:from">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_from_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+      <aggregate id="Correspondence_owner_agg" type="terms" parameter="corr:owner">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_owner_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+      <aggregate id="Correspondence_priority_agg" type="terms" parameter="corr:priority">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_priority_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+      <aggregate id="Correspondence_replied_agg" type="terms" parameter="corr:replied">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_replied_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+      <aggregate id="Correspondence_requireReply_agg" type="terms" parameter="corr:requireReply">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_requireReply_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+      <aggregate id="Correspondence_secrecyLevel_agg" type="terms" parameter="corr:secrecyLevel">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_secrecyLevel_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+      <aggregate id="Correspondence_to_agg" type="terms" parameter="corr:to">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_to_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+      <aggregate id="CtsCommon_department_agg" type="terms" parameter="cts_common:department">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="CtsCommon_department_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+      <aggregate id="Correspondence_action_agg" type="terms" parameter="corr:action">
+        <field schema="PP_Correspondences_Search_Elastic_pp" name="Correspondence_action_agg"/>
+        <properties>
+          <property name="order">count desc</property>
+          <property name="size">20</property>
+        </properties>
+      </aggregate>
+    </aggregates>
+    <quickFilters>
+      <quickFilter name="Incoming Correspondence">
+        <clause>ecm:primaryType='IncomingCorrespondence'</clause>
+        <sort column="dc:modified" ascending="false"/>
+      </quickFilter>
+      <quickFilter name="Outgoing Correspondence">
+        <clause>ecm:primaryType='OutgoingCorrespondence'</clause>
+        <sort column="dc:modified" ascending="false"/>
+      </quickFilter>
+    </quickFilters>
+    <sort column="dc:modified" ascending="false"/>
+    <pageSize>10</pageSize>
+  </genericPageProvider>
+</extension>
+<extension target="org.nuxeo.ecm.platform.query.api.PageProviderService" point="replacers">
+<replacer withClass="sa.comptechco.nuxeo.common.operations.provider.HubCorrespondencesPageProvider">
+  <provider>PP_HubCorrespondences_Elastic</provider>
+  <provider>PP_HubTargetResponse</provider>
+</replacer>
+</extension>
+  </component>

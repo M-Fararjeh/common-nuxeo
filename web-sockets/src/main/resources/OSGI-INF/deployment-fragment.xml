@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<fragment version="1">
+
+    <require>org.nuxeo.runtime.nuxeo-runtime-deploy</require>
+
+    <extension target="web#LISTENER">
+        <listener>
+            <listener-class>
+                web.sockets.notification.server.WebSocketServletListener
+            </listener-class>
+        </listener>
+    </extension>
+
+    <extension target="web#FILTER">
+        <filter>
+            <filter-name>WebSocketFilter</filter-name>
+            <filter-class>web.sockets.notification.utils.WebSocketFilter</filter-class>
+        </filter>
+        <filter-mapping>
+            <filter-name>WebSocketFilter</filter-name>
+            <url-pattern>/notifications</url-pattern>
+            <dispatcher>REQUEST</dispatcher>
+            <dispatcher>FORWARD</dispatcher>
+        </filter-mapping>
+    </extension>
+
+</fragment>

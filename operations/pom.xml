@@ -1,0 +1,281 @@
+<?xml version="1.0"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>sa.comptechco.nuxeo.common</groupId>
+        <artifactId>common-nuxeo</artifactId>
+        <version>1.0</version>
+    </parent>
+    <artifactId>operations</artifactId>
+    <name>Operations</name>
+    <description/>
+
+    <!--	<repositories>-->
+    <!--		<repository>-->
+    <!--			<id>central</id>-->
+    <!--			<name>Central</name>-->
+    <!--			<url>https://repo1.maven.org/maven2</url>-->
+    <!--		</repository>-->
+    <!--		<repository>-->
+    <!--			<id>jitpack.io</id>-->
+    <!--			<url>https://jitpack.io</url>-->
+    <!--		</repository>-->
+    <!--	</repositories>-->
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.apache.directory.studio/org.apache.commons.collections -->
+        <dependency>
+            <groupId>org.apache.directory.studio</groupId>
+            <artifactId>org.apache.commons.collections</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+
+        <!--
+                <dependency>
+                    <groupId>nuxeo-studio</groupId>
+                    <artifactId>tdf-document-management</artifactId>
+                </dependency>
+        -->
+
+        <dependency>
+            <groupId>org.nuxeo.ecm.automation</groupId>
+            <artifactId>nuxeo-automation-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.automation</groupId>
+            <artifactId>nuxeo-automation-features</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.platform</groupId>
+            <artifactId>nuxeo-platform-collections-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.routing</groupId>
+            <artifactId>nuxeo-routing-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.routing</groupId>
+            <artifactId>nuxeo-routing-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.platform</groupId>
+            <artifactId>nuxeo-platform-task-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.platform</groupId>
+            <artifactId>nuxeo-platform-task-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.automation</groupId>
+            <artifactId>nuxeo-automation-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.platform</groupId>
+            <artifactId>nuxeo-rest-api-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.platform</groupId>
+            <artifactId>nuxeo-rest-api-io</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.nuxeo.ecm.platform</groupId>
+            <artifactId>nuxeo-platform-imaging-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.nuxeo.ecm.platform</groupId>
+            <artifactId>nuxeo-platform-uidgen-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.core</groupId>
+            <artifactId>nuxeo-core-persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.platform</groupId>
+            <artifactId>nuxeo-platform-suggestbox-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.routing</groupId>
+            <artifactId>nuxeo-routing-default</artifactId>
+            <!--scope>test</scope -->
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.routing</groupId>
+            <artifactId>nuxeo-routing-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.wnameless.json</groupId>
+            <artifactId>json-flattener</artifactId>
+            <version>0.7.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.2.1.RELEASE</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.2.1.RELEASE</version>
+        </dependency>
+        <!-- elastic search audit log dependencies -->
+        <dependency>
+            <groupId>org.nuxeo.runtime</groupId>
+            <artifactId>nuxeo-runtime</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.core</groupId>
+            <artifactId>nuxeo-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.platform</groupId>
+            <artifactId>nuxeo-platform-audit-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.platform</groupId>
+            <artifactId>nuxeo-platform-audit-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.elasticsearch</groupId>
+            <artifactId>nuxeo-elasticsearch-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.elasticsearch</groupId>
+            <artifactId>nuxeo-elasticsearch-seqgen</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.elasticsearch</groupId>
+            <artifactId>nuxeo-elasticsearch-audit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.core</groupId>
+            <artifactId>nuxeo-core-binarymanager-s3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.platform</groupId>
+            <artifactId>nuxeo-importer-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.nuxeo.multi.tenant</groupId>
+            <artifactId>nuxeo-multi-tenant-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.barcode4j</groupId>
+            <artifactId>barcode4j</artifactId>
+            <version>2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+        <!--		<dependency>
+                    <groupId>com.github.kenglxn.qrgen</groupId>
+                    <artifactId>javase</artifactId>
+                    <version>2.6.0</version>
+                </dependency>-->
+        <!--///////////////upgradddddddddddddddd to 2023///////////////////-->
+        <dependency>
+            <groupId>com.syncfusion</groupId>
+            <artifactId>syncfusion-ej2-wordprocessor</artifactId>
+            <version>19.2.0.44</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.syncfusion</groupId>
+            <artifactId>syncfusion-licensing</artifactId>
+            <version>19.2.0.44</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.syncfusion</groupId>
+            <artifactId>syncfusion-javahelper</artifactId>
+            <version>19.2.0.44</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.syncfusion</groupId>
+            <artifactId>syncfusion-docio</artifactId>
+            <version>19.2.0.44</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.opensaml</groupId>
+            <artifactId>opensaml-saml-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nuxeo.ecm.platform</groupId>
+            <artifactId>nuxeo-platform-login-saml2</artifactId>
+        </dependency>
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <!--<version>${maven-bundle-plugin.version}</version> -->
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Export-Package>
+                            you.know.what.goes.here
+                        </Export-Package>
+                        <Private-Package>you.know.what.goes.here</Private-Package>
+                        <Import-Package>
+                            *
+                        </Import-Package>
+                        <Embed-Dependency>some-non-osgi-artifact;scope=compile|runtime;inline=false</Embed-Dependency>
+                        <Embed-Transitive>true</Embed-Transitive>
+                        <Embed-StripGroup>true</Embed-StripGroup>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

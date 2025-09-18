@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<component name="sa.comptechco.nuxeo.common.operations.importer.service.CustomDefaultImporterComponent" >
+<require>org.nuxeo.ecm.platform.importer.service.DefaultImporterComponent</require>
+  <documentation>
+    replace default importer to skip files
+
+    <code>
+      <extension target="sa.comptechco.nuxeo.common.operations.importer.service.CustomDefaultImporterComponent" point="importerConfiguration">
+        <importerConfig sourceNodeClass="org.nuxeo.ecm.platform.importer.source.FileSourceNode">
+          <documentModelFactory documentModelFactoryClass="sa.comptechco.nuxeo.common.operations.importer.factory.CustomDefaultDocumentModelFactory"
+            leafType="File" folderishType="Folder" />
+          <repository>default</repository>
+          <bulkMode>true</bulkMode>
+          <enablePerfLogging>true</enablePerfLogging>
+        </importerConfig>
+      </extension>
+    </code>
+
+  </documentation>
+
+  <extension target="sa.comptechco.nuxeo.common.operations.importer.service.CustomDefaultImporterComponent" point="importerConfiguration">
+    <importerConfig sourceNodeClass="org.nuxeo.ecm.platform.importer.source.FileSourceNode">
+      <documentModelFactory documentModelFactoryClass="sa.comptechco.nuxeo.common.operations.importer.factory.CustomDefaultDocumentModelFactory"
+                            leafType="File" folderishType="Folder" />
+      <repository>default</repository>
+      <bulkMode>true</bulkMode>
+      <enablePerfLogging>true</enablePerfLogging>
+    </importerConfig>
+  </extension>
+
+  <implementation
+    class="sa.comptechco.nuxeo.common.operations.importer.service.CustomDefaultImporterComponent" />
+
+  <service>
+    <provide interface="org.nuxeo.ecm.platform.importer.service.DefaultImporterService" />
+  </service>
+
+  <extension-point name="importerConfiguration">
+    <object class="org.nuxeo.ecm.platform.importer.service.ImporterConfigurationDescriptor" />
+  </extension-point>
+
+</component>

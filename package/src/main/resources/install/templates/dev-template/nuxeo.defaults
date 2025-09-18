@@ -1,0 +1,25 @@
+# Set list of templates to include, comma separated values.
+nuxeo.template.includes=common
+org.nuxeo.ecm.instance.description=Nuxeo ECM customized with dev-template
+# LDAP properties
+#nuxeo.directory.type=ldap
+#nuxeo.ldap.binddn=
+#nuxeo.ldap.bindpassword=
+#nuxeo.ldap.defaultAdministratorId=
+#nuxeo.ldap.group.mapping.label=
+#nuxeo.ldap.group.mapping.members.staticAttributeId=uniqueMember
+#nuxeo.ldap.group.mapping.name=
+#nuxeo.ldap.group.mapping.rdn=
+#nuxeo.ldap.group.searchBaseDn=
+#nuxeo.ldap.group.searchFilter=(|(objectClass=groupOfUniqueNames)(objectClass=groupOfURLs))
+#nuxeo.ldap.url=
+#nuxeo.ldap.user.mapping.company=
+#nuxeo.ldap.user.mapping.firstname=
+#nuxeo.ldap.user.mapping.lastname=
+#nuxeo.ldap.user.mapping.password=
+#nuxeo.ldap.user.mapping.rdn=
+#nuxeo.ldap.user.mapping.username=
+#nuxeo.ldap.user.searchBaseDn=
+#nuxeo.ldap.user.searchFilter=
+#nuxeo.ldap.user.searchScope=onelevel
+#JAVA_OPTS=$JAVA_OPTS -Dapplicationinsights.configurationDirectory=/var/lib/nuxeo/azure

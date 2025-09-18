@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<component name="sa.comptechco.nuxeo.common.marshallers" version="1.0.0">
+    <require>org.nuxeo.ecm.platform.comment.service.marshaller</require>
+    <extension target="org.nuxeo.ecm.core.io.MarshallerRegistry" point="marshallers">
+        <register class="sa.comptechco.nuxeo.common.marshallers.CustomCommentJsonWriter" enable="true" />
+        <register class="sa.comptechco.nuxeo.common.marshallers.CustomTaskJsonWriter" enable="true" />
+        <register class="sa.comptechco.nuxeo.common.marshallers.CustomPrincipalJsonWriter" enable="true" />
+
+        <register class="sa.comptechco.nuxeo.common.marshallers.CustomDocumentModelJsonWriter" enable="true" />
+        <register class="sa.comptechco.nuxeo.common.marshallers.CustomDocumentModelListJsonWriter" enable="false" />
+        <register class="sa.comptechco.nuxeo.common.marshallers.CustomSubtypesJsonEnricher" enable="false" />
+        <register class="sa.comptechco.nuxeo.common.marshallers.QuickAccessEnricher" enable="true" />
+        <register class="sa.comptechco.nuxeo.common.marshallers.ThumbnailSizeEnricher" enable="true" />
+        <register class="sa.comptechco.nuxeo.common.marshallers.CustomPermissionsJsonEnricher" enable="true" />
+        <register class="sa.comptechco.nuxeo.common.marshallers.DocumentActionsJsonEnricher" enable="true" />
+    </extension>
+</component>

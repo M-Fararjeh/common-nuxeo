@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<component name="web.sockets.notification.events.NotificationCreationListener">
+    <extension target="org.nuxeo.ecm.core.event.EventServiceComponent" point="listener">
+        <listener name="notificationContentListener" async="true"
+                  class="web.sockets.notification.events.NotificationCreationListener">
+            <event>documentCreated</event>
+        </listener>
+    </extension>
+</component>

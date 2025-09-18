@@ -1,0 +1,9 @@
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Manifest-Version: 1.0
+Bundle-Vendor: sa.comptechco.nuxeo.common
+Bundle-Version: 1.0.0
+Bundle-Name: marshallers
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: sa.comptechco.nuxeo.common-marshallers-core;singleton=true
+Nuxeo-Component: OSGI-INF/marshallers-contrib.xml

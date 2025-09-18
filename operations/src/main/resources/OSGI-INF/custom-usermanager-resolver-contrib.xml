@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<component name="sa.comptechco.nuxeo.common.usermanager.resolver">
+  <require>org.nuxeo.ecm.platform.usermanager.resolver</require>
+  <documentation>
+    Resolver for NuxeoPrincipal and NuxeoGroup document properties. Values for properties must be prefixed
+    by 'user:' or 'group:'.
+  </documentation>
+
+  <extension target="org.nuxeo.ecm.core.schema.ObjectResolverService" point="resolvers">
+    <resolver type="userManagerResolver" class="sa.comptechco.nuxeo.common.operations.usermanager.CustomUserManagerResolver" />
+  </extension>
+
+</component>

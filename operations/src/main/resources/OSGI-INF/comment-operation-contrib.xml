@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<component name="sa.comptechco.nuxeo.common.operations" version="1.0">
+
+  <extension point="operations" target="org.nuxeo.ecm.core.operation.OperationServiceComponent">
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.CommentOperation"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.SystemNotificationOperation"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.QRCodeGenerateOperation"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.CTDocumentTemplateParse"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.CTDocumentTemplateRender"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.DepartmentOperation"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.CustomSuggestOperation"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.CorrespondenceSuggestOperation"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.GetDocumentPropertiesBySchema"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.GetOrCreateDocumentOperation"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.DocumentActionsOperation"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.UserActionsOperation"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.AssignmentSuggestOperation"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.UnrestrictedBusinessLogOperation"/>
+    <operation class="sa.comptechco.nuxeo.common.operations.operations.UnrestrictedCommentOperation"/>
+  </extension>
+
+</component>

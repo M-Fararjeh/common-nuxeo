@@ -1,0 +1,11 @@
+{
+  "generator-nuxeo": {
+    "lastRemote": "C:\\Users\\user\\.cache\\node-yeoman-remote-cache\\nuxeo\\generator-nuxeo-meta\\stable",
+    "promptValues": {
+      "parent_version": "2023.0.159",
+      "package": "web.sockets",
+      "parent_artifact": "common-nuxeo"
+    },
+    "_nuxeo_version": "2023.0.159"
+  }
+}
