@@ -13,22 +13,18 @@ import org.nuxeo.ecm.automation.core.annotations.OperationMethod;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.NuxeoException;
-import org.nuxeo.ecm.core.schema.SchemaManager;
 import org.nuxeo.ecm.platform.types.localconfiguration.UITypesConfigurationConstants;
 import org.nuxeo.runtime.api.Framework;
-import sa.comptechco.nuxeo.common.services.api.CustomRestrictionsService;
-import sa.comptechco.nuxeo.common.services.model.ActionEnum;
 
 import java.util.*;
 
 import static java.util.stream.Collectors.toSet;
 
 /**
- * Operation to retrieve available document actions based on user permissions and restrictions.
+ * Operation to retrieve available document actions based on user permissions.
  * 
  * This operation evaluates what actions a user can perform on a document by checking:
- * - Document type restrictions
- * - Path-based restrictions  
+ * - Document type permissions
  * - User group memberships
  * - Local UI type configurations
  */
@@ -36,13 +32,17 @@ import static java.util.stream.Collectors.toSet;
     id = DocumentActionsOperation.ID, 
     category = Constants.CAT_DOCUMENT, 
     label = "Get Document Actions", 
-    description = "Retrieve available document actions based on user permissions and restrictions."
+    description = "Retrieve available document actions based on user permissions."
 )
 public class DocumentActionsOperation {
 
     public static final String ID = "Document.DocumentActionsOperation";
     
-    private static final String OPERATION_DOCUMENT_ACTIONS = "Document.DocumentActionsOperation";
+    // Standard document actions
+    private static final String ACTION_CREATE = "create";
+    private static final String ACTION_EDIT = "edit";
+    private static final String ACTION_DELETE = "delete";
+    private static final String ACTION_CREATE_CHILD = "create_child";
 
     @Context
     protected CoreSession session;
@@ -63,94 +63,96 @@ public class DocumentActionsOperation {
      * @return List of available action names
      */
     private List<String> getDocumentActions(DocumentModel document) {
-        AutomationService automationService = Framework.getService(AutomationService.class);
+        List<String> actions = new ArrayList<>();
         
-        try {
-            OperationType operation = automationService.getOperation(OPERATION_DOCUMENT_ACTIONS);
-            OperationContext operationContext = createOperationContext(document);
-            
-            @SuppressWarnings("unchecked")
-            List<String> actions = (List<String>) automationService.run(
-                operationContext, 
-                operation.getId(), 
-                Collections.emptyMap()
-            );
-            
-            return filterActionsBasedOnRestrictions(document, actions);
-            
-        } catch (OperationException e) {
-            throw new NuxeoException("Failed to retrieve actions for document: " + document.getId(), e);
+        // Check basic permissions
+        if (canPerformAction(document, ACTION_CREATE)) {
+            actions.add(ACTION_CREATE);
         }
-    }
-
-    /**
-     * Creates an operation context for the document actions operation.
-     */
-    private OperationContext createOperationContext(DocumentModel document) {
-        OperationContext operationContext = new OperationContext(session);
-        operationContext.setInput(document);
-        return operationContext;
-    }
-
-    /**
-     * Filters actions based on custom restrictions and user permissions.
-     * 
-     * @param document The document to check
-     * @param actions The initial list of actions
-     * @return Filtered list of allowed actions
-     */
-    private List<String> filterActionsBasedOnRestrictions(DocumentModel document, List<String> actions) {
-        CustomRestrictionsService restrictionsService = Framework.getService(CustomRestrictionsService.class);
         
-        if (restrictionsService == null) {
-            return actions;
+        if (canPerformAction(document, ACTION_EDIT)) {
+            actions.add(ACTION_EDIT);
         }
-
-        List<String> userGroups = session.getPrincipal().getAllGroups();
-        String documentPath = getDocumentPath(document);
-        String documentType = document.getType();
-
-        return actions.stream()
-            .filter(action -> isActionAllowed(restrictionsService, documentPath, documentType, userGroups, action))
-            .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+        
+        if (canPerformAction(document, ACTION_DELETE)) {
+            actions.add(ACTION_DELETE);
+        }
+        
+        if (canPerformAction(document, ACTION_CREATE_CHILD)) {
+            actions.add(ACTION_CREATE_CHILD);
+        }
+        
+        return actions;
     }
 
     /**
-     * Checks if a specific action is allowed for the user on the document.
+     * Checks if the current user can perform a specific action on the document.
      */
-    private boolean isActionAllowed(CustomRestrictionsService restrictionsService, 
-                                  String documentPath, 
-                                  String documentType, 
-                                  List<String> userGroups, 
-                                  String action) {
+    private boolean canPerformAction(DocumentModel document, String action) {
         try {
-            ActionEnum actionEnum = ActionEnum.valueOf(action.toLowerCase());
-            return restrictionsService.checkPathOrTypeAllowed(documentPath, documentType, userGroups, actionEnum);
-        } catch (IllegalArgumentException e) {
-            // If action is not in enum, allow by default
-            return true;
+            switch (action) {
+                case ACTION_CREATE:
+                    return hasCreatePermission(document);
+                case ACTION_EDIT:
+                    return hasEditPermission(document);
+                case ACTION_DELETE:
+                    return hasDeletePermission(document);
+                case ACTION_CREATE_CHILD:
+                    return hasCreateChildPermission(document);
+                default:
+                    return false;
+            }
+        } catch (Exception e) {
+            // Log error and deny permission by default
+            return false;
         }
     }
 
     /**
-     * Safely gets the document path, handling null cases.
+     * Checks if user has create permission.
      */
-    private String getDocumentPath(DocumentModel document) {
-        return document.getPath() != null ? document.getPath().toString() : "";
+    private boolean hasCreatePermission(DocumentModel document) {
+        return session.hasPermission(document.getRef(), "Write");
+    }
+
+    /**
+     * Checks if user has edit permission.
+     */
+    private boolean hasEditPermission(DocumentModel document) {
+        return session.hasPermission(document.getRef(), "Write");
+    }
+
+    /**
+     * Checks if user has delete permission.
+     */
+    private boolean hasDeletePermission(DocumentModel document) {
+        return session.hasPermission(document.getRef(), "Remove");
+    }
+
+    /**
+     * Checks if user has permission to create child documents.
+     */
+    private boolean hasCreateChildPermission(DocumentModel document) {
+        if (!document.isFolder()) {
+            return false;
+        }
+        
+        Collection<String> allowedSubtypes = computeSubtypes(document);
+        return !allowedSubtypes.isEmpty() && session.hasPermission(document.getRef(), "AddChildren");
     }
 
     /**
      * Computes subtypes that can be created under this document.
-     * This method handles UI type configurations and custom restrictions.
+     * This method handles UI type configurations.
      */
-    public Collection<String> computeSubtypes(DocumentModel document) {
+    private Collection<String> computeSubtypes(DocumentModel document) {
         Collection<String> defaultSubtypes = document.getDocumentType().getAllowedSubtypes();
         
         if (hasUITypesConfiguration(document)) {
             defaultSubtypes = computeLocalConfigurationSubtypes(document, defaultSubtypes);
         }
 
-        return filterSubtypesByRestrictions(document, defaultSubtypes);
+        return defaultSubtypes;
     }
 
     /**
@@ -186,35 +188,11 @@ public class DocumentActionsOperation {
         return Collections.emptySet();
     }
 
-    /**
-     * Filters subtypes based on custom restrictions for creation permissions.
-     */
-    private Collection<String> filterSubtypesByRestrictions(DocumentModel document, 
-                                                          Collection<String> subtypes) {
-        CustomRestrictionsService restrictionsService = Framework.getService(CustomRestrictionsService.class);
-        
-        if (restrictionsService == null) {
-            return subtypes;
-        }
-
-        List<String> userGroups = session.getPrincipal().getAllGroups();
-        String documentPath = getDocumentPath(document);
-
-        // Check if create_child is allowed on parent document
-        if (!restrictionsService.checkPathOrTypeAllowed(documentPath, document.getType(), 
-                                                       userGroups, ActionEnum.create_child)) {
-            return Collections.emptySet();
-        }
-
-        // Filter subtypes based on create permissions
-        return subtypes.stream()
-            .filter(subtype -> restrictionsService.checkPathOrTypeAllowed(null, subtype, 
-                                                                        userGroups, ActionEnum.create))
-            .collect(toSet());
-    }
-
     // Helper methods for property access
 
+    /**
+     * Safely gets a boolean property value.
+     */
     private Boolean getBooleanProperty(DocumentModel document, String propertyName) {
         try {
             return (Boolean) document.getPropertyValue(propertyName);
@@ -223,6 +201,9 @@ public class DocumentActionsOperation {
         }
     }
 
+    /**
+     * Safely gets a string array property value.
+     */
     private String[] getStringArrayProperty(DocumentModel document, String propertyName) {
         try {
             return (String[]) document.getPropertyValue(propertyName);
@@ -231,6 +212,9 @@ public class DocumentActionsOperation {
         }
     }
 
+    /**
+     * Converts string array to list, handling null values.
+     */
     private List<String> arrayToList(String[] array) {
         return array == null ? Collections.emptyList() : Arrays.asList(array);
     }
