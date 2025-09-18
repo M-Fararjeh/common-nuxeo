@@ -194,11 +194,6 @@
             <artifactId>nuxeo-multi-tenant-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>sa.comptechco.nuxeo.common</groupId>
-            <artifactId>marshallers</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>net.sf.barcode4j</groupId>
             <artifactId>barcode4j</artifactId>
             <version>2.1</version>
